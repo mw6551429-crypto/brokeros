@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/brokeros/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>BrokerOS</title>
+    <script>
+      // No-FOUC: apply persisted theme + language direction before React mounts.
+      (function () {
+        try {
+          var stored = localStorage.getItem('brokeros-theme');
+          var theme = 'system';
+          if (stored) {
+            var parsed = JSON.parse(stored);
+            theme = (parsed && parsed.state && parsed.state.theme) || 'system';
+          }
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+          document.documentElement.classList.toggle('dark', isDark);
+
+          var lng = localStorage.getItem('i18nextLng') || 'en';
+          var lang = lng.indexOf('ar') === 0 ? 'ar' : 'en';
+          document.documentElement.setAttribute('lang', lang);
+          document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        } catch (e) {
+          /* localStorage unavailable — fall back to markup defaults */
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/brokeros/assets/index-D5nwpckF.js"></script>
+    <link rel="stylesheet" crossorigin href="/brokeros/assets/index-jCoYVyF9.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
